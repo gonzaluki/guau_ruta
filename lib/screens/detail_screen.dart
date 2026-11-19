@@ -5,7 +5,7 @@ import '../services/location_service.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({super.key});
-
+  // se usa context.mounted para comprobar que la pantalla sigue viva
   Future<void> _abrirMapa(BuildContext context, Traslado t) async {
     try {
       await LocationService().abrirGoogleMaps(t.latitud, t.longitud);
@@ -19,6 +19,7 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Recupera el Traslado que HomeScreen envió en "arguments" al navegar con pushNamed
     final traslado = ModalRoute.of(context)!.settings.arguments as Traslado;
 
     return Scaffold(
@@ -28,6 +29,7 @@ class DetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // hero con el mismo tag que usó la tarjeta en HomeScreen ('foto_$id').
             Center(
               child: Hero(
                 tag: 'foto_${traslado.id}',
@@ -61,6 +63,7 @@ class DetailScreen extends StatelessWidget {
             Text('Latitud: ${traslado.latitud.toStringAsFixed(6)}'),
             Text('Longitud: ${traslado.longitud.toStringAsFixed(6)}'),
             const SizedBox(height: 20),
+            //botón que abre google maps con las coordenadas guardadas
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
